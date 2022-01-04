@@ -5,8 +5,15 @@ use serde::de::DeserializeOwned;
 pub fn handle_request<T: DeserializeOwned>(config: RequestConfig) -> Result<T, Error> {
     let url = config.to_string();
     let client = reqwest::blocking::Client::new();
+    println!("{}", &url);
+    println!("{:?}", &config.params);
     let res = client.get(url).query(&config.params).send()?;
     res.json::<T>()
+}
+
+pub fn get_last_block(api_key: &str) -> Result<LastBlock, Error> {
+    let config = get_last_block_config(api_key);
+    handle_request(config)
 }
 
 pub fn get_address_info(
@@ -29,11 +36,6 @@ pub fn get_top_token_holders(
     limit: u64,
 ) -> Result<TopTokenHolders, Error> {
     let config = get_top_token_holders_config(api_key, address, limit);
-    handle_request(config)
-}
-
-pub fn get_last_block(api_key: &str) -> Result<LastBlock, Error> {
-    let config = get_last_block_config(api_key);
     handle_request(config)
 }
 
