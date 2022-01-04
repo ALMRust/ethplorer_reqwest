@@ -5,8 +5,6 @@ use serde::de::DeserializeOwned;
 pub fn handle_request<T: DeserializeOwned>(config: RequestConfig) -> Result<T, Error> {
     let url = config.to_string();
     let client = reqwest::blocking::Client::new();
-    println!("{}", &url);
-    println!("{:?}", &config.params);
     let res = client.get(url).query(&config.params).send()?;
     res.json::<T>()
 }
