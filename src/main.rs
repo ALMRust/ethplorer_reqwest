@@ -1,8 +1,7 @@
 use std::env;
-use ethplorer::{GetAddressHistoryParams, GetTopParams};
-use ethplorer_reqwest::{get_address_history, get_last_block, get_token_daily_price_history, get_top, get_top_tokens};
+use ethplorer_reqwest::get_token_daily_price_history;
 
-const BINANCE: &str = "0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE";
+// const BINANCE: &str = "0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE";
 fn main() {
     let key = env::var("ETHPLORER_KEY").unwrap();
     let data = get_token_daily_price_history(
