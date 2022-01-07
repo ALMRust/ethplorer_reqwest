@@ -1,5 +1,7 @@
-use std::env;
+#![warn(clippy::all, clippy::pedantic)]
+
 use ethplorer_reqwest::get_token_daily_price_history;
+use std::env;
 
 // const BINANCE: &str = "0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE";
 fn main() {

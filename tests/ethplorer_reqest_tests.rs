@@ -1,8 +1,11 @@
 #[cfg(test)]
 mod tests {
-    use std::env;
-    use ethplorer::{GetAddressHistoryParams, GetAddressInfoParams, GetAddressTransactionsParams, GetTokenHistoryParams, GetTopParams};
+    use ethplorer::{
+        GetAddressHistoryParams, GetAddressInfoParams, GetAddressTransactionsParams,
+        GetTokenHistoryParams, GetTopParams,
+    };
     use ethplorer_reqwest::*;
+    use std::env;
     const TETHER: &str = "0xdac17f958d2ee523a2206206994597c13d831ec7";
     const BINANCE: &str = "0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE";
     const ETHPLORER_KEY: &str = "ETHPLORER_KEY";
@@ -24,18 +27,15 @@ mod tests {
                 token: "".to_string(),
                 show_eth_totals: true,
             },
-        ).unwrap();
+        )
+        .unwrap();
         assert!(true);
     }
 
     #[test]
     fn get_top_token_holders_works() {
         let key = env::var(ETHPLORER_KEY).unwrap();
-        let data = get_top_token_holders(
-            &key,
-            TETHER,
-            5,
-        ).unwrap();
+        let data = get_top_token_holders(&key, TETHER, 5).unwrap();
         assert_eq!(data.holders.len(), 5);
     }
 
@@ -63,11 +63,7 @@ mod tests {
     #[test]
     fn get_token_daily_transaction_count_works() {
         let key = env::var(ETHPLORER_KEY).unwrap();
-        let data = get_token_daily_transaction_count(
-            &key,
-            TETHER,
-            5,
-        ).unwrap();
+        let data = get_token_daily_transaction_count(&key, TETHER, 5).unwrap();
         assert!(data.count_txs.len() > 0);
     }
 
@@ -81,9 +77,10 @@ mod tests {
                 history_type: "".to_string(),
                 limit: 5,
                 timestamp: Default::default(),
-                token: "".to_string()
+                token: "".to_string(),
             },
-        ).unwrap();
+        )
+        .unwrap();
         assert!(data.operations.len() > 0);
     }
 
@@ -91,10 +88,14 @@ mod tests {
     fn get_top_works() {
         let key = env::var(ETHPLORER_KEY).unwrap();
         let limit = 5;
-        let data = get_top(&key, &GetTopParams {
-            limit,
-            criteria: "cap".to_string()
-        }).unwrap();
+        let data = get_top(
+            &key,
+            &GetTopParams {
+                limit,
+                criteria: "cap".to_string(),
+            },
+        )
+        .unwrap();
         assert_eq!(data.tokens.len() as u64, limit + 1);
     }
 
@@ -110,7 +111,8 @@ mod tests {
                 timestamp: Default::default(),
                 show_zero_values: false,
             },
-        ).unwrap();
+        )
+        .unwrap();
         assert_eq!(data.len() as u64, limit);
     }
 
@@ -124,9 +126,10 @@ mod tests {
             &GetTokenHistoryParams {
                 history_type: "".to_string(),
                 limit: 5,
-                timestamp: Default::default()
+                timestamp: Default::default(),
             },
-        ).unwrap();
+        )
+        .unwrap();
         assert_eq!(data.operations.len() as u64, limit);
     }
 
@@ -135,10 +138,10 @@ mod tests {
         let key = env::var(ETHPLORER_KEY).unwrap();
         let limit = 5;
         let data = get_token_daily_price_history(
-            &key,
-            TETHER, // tether erc20,
+            &key, TETHER, // tether erc20,
             5,
-        ).unwrap();
+        )
+        .unwrap();
         assert!(data.history.count_txs.len() > 0);
     }
 }
